@@ -26,14 +26,12 @@ module Inertiable
     }
 
     if inertiable?
-      require 'pry'; binding.pry
       render json: data
     else
       html = helpers.tag.div(
         id: 'app',
         data: { page: data }
       )
-      require 'pry'; binding.pry
       render html: html, layout: true
     end
   end

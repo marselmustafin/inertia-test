@@ -1,6 +1,7 @@
 <template>
   <Layout>
     <Head title="Users" />
+    <Link href="/users/new">New user</Link>
     <ul id="user-list">
       <li v-for="user in users" :key="user.id">
         <Link :href="`/users/${user.id}`">
