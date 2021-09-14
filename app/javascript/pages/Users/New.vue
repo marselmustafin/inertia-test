@@ -3,7 +3,7 @@
     <form @submit.prevent="submit">
       <label for="name">Name:</label>
       <input id="name" v-model="form.name" />
-      <div v-if="errors.first_name">{{ errors.first_name }}</div>
+      <!-- <div v-if="errors.first_name">{{ errors.first_name }}</div> -->
       <label for="email">Email:</label>
       <input id="email" v-model="form.email" />
       <label for="age">Age:</label>

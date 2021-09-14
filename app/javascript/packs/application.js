@@ -1,8 +1,18 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
+import axios from 'axios'
+import Vue from 'vue'
+import { createInertiaApp } from '@inertiajs/inertia-vue'
+import  "../application.css";
 
-import Rails from "@rails/ujs"
+document.addEventListener('DOMContentLoaded', () => {
+  const csrfToken = document.querySelector('meta[name=csrf-token]').content
+  axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
 
-Rails.start()
+  createInertiaApp({
+    resolve: name => import(`../pages/${name}`),
+    setup({ el, App, props }) {
+      new Vue({
+        render: h => h(App, props),
+      }).$mount(el)
+    },
+  })
+})

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    inertia('Users/Index', users: User.all.map { |u| { id: u.id, name: u.name } })
+    inertia('Users/Index', users: User.all.map { |u| { id: u.id, name: u.name, email: u.email } })
   end
 
   def show
@@ -16,9 +16,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    User.create(user_params)
+    user = User.create(user_params)
 
-    redirect_to users_path, status: :see_other
+    if user.persisted?
+      redirect_to users_path, status: :see_other
+    else
+      redirect_to new_user_path, inertia: { errors: user.errors }
+    end
   end
 
   private
