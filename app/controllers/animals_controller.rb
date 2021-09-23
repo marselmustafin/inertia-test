@@ -2,17 +2,18 @@ class AnimalsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    inertia('Animals/Index', animals: Animal.all.map { |u| { id: u.id, name: u.name, kind: u.kind, gender: u.gender } })
+    render inertia: 'Animals/Index',
+           props: { animals: Animal.all.map { |a| a.attributes.slice('id', 'name', 'kind', 'gender') } }
   end
 
   def show
     animal = Animal.find(params[:id])
 
-    inertia('Animals/Show', animal: animal)
+    render inertia: 'Animals/Show', props: { animal: animal }
   end
 
   def new
-    inertia('Animals/New', genders: Animal.genders.keys)
+    render inertia: 'Animals/New', props: { genders: Animal.genders.keys }
     # inertia('Animals/Index', modal: 'Animals/NewModal', genders: Animal.genders.keys)
   end
 
@@ -22,7 +23,7 @@ class AnimalsController < ApplicationController
     if animal.persisted?
       redirect_to animals_path, status: :see_other
     else
-      redirect_to new_animal_path, inertia: { errors: animal.errors }
+      redirect_to new_animal_path, turbolinks: false, inertia: { errors: animal.errors }
     end
   end
 
