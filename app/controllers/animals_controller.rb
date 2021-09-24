@@ -14,7 +14,6 @@ class AnimalsController < ApplicationController
 
   def new
     render inertia: 'Animals/New', props: { genders: Animal.genders.keys }
-    # inertia('Animals/Index', modal: 'Animals/NewModal', genders: Animal.genders.keys)
   end
 
   def create
@@ -36,6 +35,6 @@ class AnimalsController < ApplicationController
   private
 
   def animal_params
-    params.require(:animal).permit(:name, :kind, :age, :gender)
+    params.require(:animal).permit(:name, :kind, :age, :gender, :photo)
   end
 end

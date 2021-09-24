@@ -57,3 +57,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "inertia_rails", "~> 1.11"
+
+gem "image_processing", "~> 1.12"

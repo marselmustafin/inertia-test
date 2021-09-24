@@ -3,7 +3,7 @@
     <div class="flex-1 px-4 pt-32">
       <div class="flex justify-center">
         <div class="px-6 py-4 h-2/5 rounded bg-white overflow-hidden shadow-lg max-w-xl">
-          <div class="font-bold text-xl mb-2">New animal</div>
+          <div class="font-bold text-xl mb-6">New animal</div>
           <form @submit.prevent="submit" class="w-full max-w-lg">
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -17,10 +17,10 @@
                 <div v-if="errors.kind" class="text-xs text-red-500">{{ errors.kind[0] }}</div>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="label" for="grid-city">Age</label>
-                <input v-model="form.age" class="input" :class="{ error: isErrorKey('age') }" id="grid-city" type="number" min="0" max="100" placeholder="0">
+                <label class="label" for="grid-age">Age</label>
+                <input v-model="form.age" class="input" :class="{ error: isErrorKey('age') }" id="grid-age" type="number" min="0" max="100" placeholder="0">
                 <div v-if="errors.age" class="text-xs text-red-500">{{ errors.age[0] }}</div>
               </div>
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -36,6 +36,12 @@
                     </svg>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="label" for="grid-photo">photo</label>
+                <input id="grid-photo" type="file" @input="form.photo = $event.target.files[0]" />
               </div>
             </div>
             <div class="flex justify-center my-4">
@@ -69,17 +75,20 @@ export default {
   },
   data() {
     return {
-      form: {
+      form: this.$inertia.form({
         name: null,
         age: null,
         gender: null,
-        kind: null
-      },
+        kind: null,
+        photo: null
+      }),
     }
   },
   methods: {
     submit() {
-      this.$inertia.post('/animals', this.form)
+      this.form
+        .transform((data) => ({animal: data}))
+        .post('/animals')
     },
     capitalize(s) {
       return s.charAt(0).toUpperCase() + s.slice(1);
