@@ -3,8 +3,22 @@
     <Head title="Animals" />
     <div class="flex justify-center mt-32 w-full h-1/3">
       <div class="w-2/3">
-        <div class="bg-white rounded-md shadow overflow-x-auto">
-          <table class="w-full whitespace-nowrap">
+        <div class="bg-green-400 p-6 rounded-md shadow overflow-x-auto">
+          <div class="flex w-full rounded-md mb-2 py-2 px-6 bg-white">
+            <span class="mr-4">
+              <Link href="/animals" :class="isGender('') ? 'font-bold' : ''" :only="['animals']">All ({{ all_count }})</Link>
+            </span>
+            <span class="mr-4 text-bold">
+              <Link href="/animals?gender=boy" :class="isGender('boy') ? 'font-bold' : ''" :only="['animals']">Boys ({{ boys_count }})</Link>
+            </span>
+            <span class="mr-4 text-bold">
+              <Link href="/animals?gender=girl" :class="isGender('girl') ? 'font-bold' : ''" :only="['animals']">Girls ({{ girls_count }})</Link>
+            </span>
+            <span class="mr-4 text-bold">
+              <Link href="/animals?gender=nb" :class="isGender('nb') ? 'font-bold' : ''" :only="['animals']">Non-binary ({{ nb_count }})</Link>
+            </span>
+          </div>
+          <table class="w-full rounded-md bg-white whitespace-nowrap">
             <tr class="h-8 text-left font-bold">
               <th class="px-6 pt-6 pb-4">Name</th>
               <th class="px-6 pt-6 pb-4">Kind</th>
@@ -59,6 +73,18 @@
     },
     props: {
       animals: Array,
+      all_count: Number,
+      boys_count: Number,
+      girls_count: Number,
+      nb_count: Number
+    },
+    methods: {
+      isGender(gender) {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+
+        return gender === (params.gender || '')
+      }
     }
   }
 </script>
