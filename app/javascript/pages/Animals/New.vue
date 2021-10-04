@@ -56,6 +56,7 @@
 
 <script>
 import Layout from '../Layout'
+import { Inertia } from '@inertiajs/inertia'
 
 export default {
   components: {
@@ -75,24 +76,22 @@ export default {
   },
   data() {
     return {
-      form: this.$inertia.form({
+      form: {
         name: null,
         age: null,
         gender: null,
         kind: null,
         photo: null
-      }),
+      },
     }
   },
   methods: {
     submit() {
-      this.form
-        .transform((data) => ({animal: data}))
-        .post('/animals')
+      Inertia.post('/animals', { animal: this.form })
     },
     capitalize(s) {
       return s.charAt(0).toUpperCase() + s.slice(1);
-    },
+     },
     isErrorKey(k){
       return this.errors?.[k]?.length
     }
