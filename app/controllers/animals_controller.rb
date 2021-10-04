@@ -2,8 +2,21 @@ class AnimalsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
+    scope =
+      if params[:gender].in?(Animal.genders.keys)
+        Animal.where(gender: params[:gender])
+      else
+        Animal.all
+      end
+
     render inertia: 'Animals/Index',
-           props: { animals: Animal.all.map { |a| a.attributes.slice('id', 'name', 'kind', 'gender') } }
+           props: {
+             animals: scope.map { |a| a.attributes.slice('id', 'name', 'kind', 'gender') },
+             all_count: -> { Animal.count },
+             boys_count: -> { Animal.boy.count },
+             girls_count: -> { Animal.girl.count },
+             nb_count: -> { Animal.nb.count }
+           }
   end
 
   def show
