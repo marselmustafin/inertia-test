@@ -3,19 +3,19 @@ class AnimalsController < ApplicationController
 
   def index
     scope =
-      if params[:gender].in?(Animal.genders.keys)
-        Animal.where(gender: params[:gender])
+      if params[:animal_class].in?(Animal.animal_classes.keys)
+        Animal.where(animal_class: params[:animal_class])
       else
         Animal.all
       end
 
     render inertia: 'Animals/Index',
            props: {
-             animals: scope.map { |a| a.attributes.slice('id', 'name', 'kind', 'gender') },
+             animals: scope.map { |a| a.attributes.slice('id', 'name', 'kind', 'animal_class') },
              all_count: -> { Animal.count },
-             boys_count: -> { Animal.boy.count },
-             girls_count: -> { Animal.girl.count },
-             nb_count: -> { Animal.nb.count }
+             mammals_count: -> { Animal.mammal.count },
+             birds_count: -> { Animal.bird.count },
+             fish_count: -> { Animal.fish.count }
            }
   end
 
@@ -26,7 +26,7 @@ class AnimalsController < ApplicationController
   end
 
   def new
-    render inertia: 'Animals/New', props: { genders: Animal.genders.keys }
+    render inertia: 'Animals/New', props: { animal_classes: Animal.animal_classes.keys }
   end
 
   def create
@@ -48,6 +48,6 @@ class AnimalsController < ApplicationController
   private
 
   def animal_params
-    params.require(:animal).permit(:name, :kind, :age, :gender, :photo)
+    params.require(:animal).permit(:name, :kind, :age, :animal_class, :photo)
   end
 end

@@ -24,12 +24,15 @@
                 <div v-if="errors.age" class="text-xs text-red-500">{{ errors.age[0] }}</div>
               </div>
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="label" for="grid-gender">Gender</label>
+                <label class="label" for="grid-animal_class">Class</label>
                 <div class="relative">
-                  <select v-model="form.gender" class="input" :class="{ error: isErrorKey('gender') }" id="grid-state">
-                    <option v-for="gender in genders" :value="gender">{{ capitalize(gender) }}</option>
+                  <select v-model="form.animal_class" class="input" :class="{ error:
+                    isErrorKey('animal_class') }" id="grid-state">
+                    <option v-for="animal_class in animal_classes" :value="animal_class">{{
+                    capitalize(animal_class) }}</option>
                   </select>
-                  <div v-if="errors.gender" class="text-xs text-red-500">{{ errors.gender[0] }}</div>
+                  <div v-if="errors.animal_class" class="text-xs text-red-500">{{
+                    errors.animal_class[0] }}</div>
                   <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                       <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
@@ -63,7 +66,7 @@ export default {
     Layout,
   },
   props: {
-    genders: {
+    animal_classes: {
       type: Array,
       default: () => [],
     },
@@ -79,7 +82,7 @@ export default {
       form: {
         name: null,
         age: null,
-        gender: null,
+        animal_class: null,
         kind: null,
         photo: null
       },

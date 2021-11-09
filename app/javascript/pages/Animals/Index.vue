@@ -6,23 +6,26 @@
         <div class="bg-green-400 p-6 rounded-md shadow overflow-x-auto">
           <div class="flex w-full rounded-md mb-2 py-2 px-6 bg-white">
             <span class="mr-4">
-              <Link href="/animals" :class="isGender('') ? 'font-bold' : ''" :only="['animals']">All ({{ all_count }})</Link>
+              <Link href="/animals" :class="isAnimalClass('') ? 'font-bold' : ''" :only="['animals']">All ({{ all_count }})</Link>
             </span>
             <span class="mr-4 text-bold">
-              <Link href="/animals?gender=boy" :class="isGender('boy') ? 'font-bold' : ''" :only="['animals']">Boys ({{ boys_count }})</Link>
+              <Link href="/animals?animal_class=mammal" :class="isAnimalClass('mammal') ?
+              'font-bold' : ''" :only="['animals']">Mammals ({{ mammals_count }})</Link>
             </span>
             <span class="mr-4 text-bold">
-              <Link href="/animals?gender=girl" :class="isGender('girl') ? 'font-bold' : ''" :only="['animals']">Girls ({{ girls_count }})</Link>
+              <Link href="/animals?animal_class=bird" :class="isAnimalClass('bird') ? 'font-bold' :
+              ''" :only="['animals']">Birds ({{ birds_count }})</Link>
             </span>
             <span class="mr-4 text-bold">
-              <Link href="/animals?gender=nb" :class="isGender('nb') ? 'font-bold' : ''" :only="['animals']">Non-binary ({{ nb_count }})</Link>
+              <Link href="/animals?animal_class=fish" :class="isAnimalClass('fish') ? 'font-bold' :
+              ''" :only="['animals']">Fish ({{ fish_count }})</Link>
             </span>
           </div>
           <table class="w-full rounded-md bg-white whitespace-nowrap">
             <tr class="h-8 text-left font-bold">
               <th class="px-6 pt-6 pb-4">Name</th>
               <th class="px-6 pt-6 pb-4">Kind</th>
-              <th class="px-6 pt-6 pb-4">Gender</th>
+              <th class="px-6 pt-6 pb-4">Class</th>
               <th class="px-6 pt-6 pb-4" colspan="2"></th>
             </tr>
             <tr h-8 v-for="animal in animals" :key="animal.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
@@ -40,7 +43,7 @@
               </td>
               <td class="border-t">
                 <Link class="px-6 py-4 flex items-center" :href="`/animals/${animal.id}`" tabindex="-1">
-                  {{ animal.gender }}
+                  {{ animal.animal_class }}
                 </Link>
               </td>
               <td class="border-t w-px">
@@ -74,16 +77,16 @@
     props: {
       animals: Array,
       all_count: Number,
-      boys_count: Number,
-      girls_count: Number,
-      nb_count: Number
+      mammals_count: Number,
+      birds_count: Number,
+      fish_count: Number
     },
     methods: {
-      isGender(gender) {
+      isAnimalClass(animal_class) {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
 
-        return gender === (params.gender || '')
+        return animal_class === (params.animal_class || '')
       }
     }
   }

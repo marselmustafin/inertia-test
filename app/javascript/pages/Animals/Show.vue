@@ -18,7 +18,7 @@
             <ul>
               <li><b>Kind:</b> {{ animal.kind }}</li>
               <li><b>Age:</b> {{ animal.age }}</li>
-              <li><b>Gender:</b> {{ animal.gender }}</li>
+              <li><b>Class:</b> {{ animal.animal_class }}</li>
             </ul>
           </p>
           <div class="w-full flex justify-between items-center">
